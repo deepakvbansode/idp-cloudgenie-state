@@ -1,0 +1,63 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: git-repo-composition
+spec:
+  compositeTypeRef:
+    apiVersion: api.cloudgenie.org/v1alpha1
+    kind: XGitRepo
+  mode: Pipeline
+  pipeline:
+    - step: create-repository
+      functionRef:
+        name: crossplane-contrib-function-patch-and-transform
+      input:
+        apiVersion: pt.fn.crossplane.io/v1beta1
+        kind: Resources
+        resources:
+          - name: repo
+            base:
+              kind: Repository
+              apiVersion: repo.crossplane.io/v1alpha1
+              metadata:
+                name: new-crossplane-repository
+              spec:
+                providerConfigRef:
+                  name: gitub-provider-config
+                forProvider:
+                  description: "A repository managed by Crossplane"
+                  visibility: public
+            patches:
+              - type: FromCompositeFieldPath
+                fromFieldPath: metadata.name
+                toFieldPath: metadata.name
+              - type: FromCompositeFieldPath
+                fromFieldPath: spec.name
+                toFieldPath: spec.forProvider.name
+          - name: deployment-file
+            base:
+              kind: RepositoryFile
+              apiVersion: repo.crossplane.io/v1alpha1
+              metadata:
+                name: deployment-file
+              spec:
+                providerConfigRef:
+                  name: gitub-provider-config
+                forProvider:
+                  commitMessage: "Add deployment setup file"
+                  file: deployment.yaml
+                  content: |
+                    apiVersion: apps/v1
+                    kind: Deployment
+                    spec:
+                      replicas: 2
+                      template:
+                        spec:
+                          containers:
+                            - name: app
+                              ports:
+                                - containerPort: 80
+            patches:
+              - type: FromCompositeFieldPath
+                fromFieldPath: spec.name
+                toFieldPath: spec.forProvider.repositoryRef.name

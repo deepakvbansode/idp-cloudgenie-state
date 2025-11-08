@@ -1,0 +1,31 @@
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: xgitrepos.api.cloudgenie.org
+  labels:
+    blueprint-name: git-repo
+    blueprint-version: v0.1.0
+spec:
+  scope: Cluster
+  group: api.cloudgenie.org
+  names:
+    kind: XGitRepo
+    plural: xgitrepos
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          description: xGitRepo is the Schema for the xGitRepos API. It creates simple repository with readme file
+          type: object
+          properties:
+            spec:
+              type: object
+              description: Specification of the desired behavior of the xGitRepo
+              properties:
+                name:
+                  type: string
+                  description: Name of the repository
+              required:
+                - name
