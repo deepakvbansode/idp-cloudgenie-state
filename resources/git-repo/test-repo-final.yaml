@@ -1,0 +1,8 @@
+apiVersion: api.cloudgenie.org/v1alpha1
+kind: XGitRepo
+metadata:
+  annotations:
+    description: golang repo created vai api
+  name: test-repo-final
+spec:
+  name: test-repo-final
