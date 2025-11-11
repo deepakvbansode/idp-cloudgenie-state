@@ -1,0 +1,8 @@
+apiVersion: api.cloudgenie.org/v1alpha1
+kind: XGitRepo
+metadata:
+  annotations:
+    description: golang repo created vai api
+  name: never-give-up
+spec:
+  name: never-give-up
