@@ -18,18 +18,21 @@ spec:
           - name: repo
             base:
               kind: Repository
-              apiVersion: repo.crossplane.io/v1alpha1
-              metadata:
-                name: new-crossplane-repository
+              apiVersion: repo.github.upbound.io/v1alpha1
               spec:
                 providerConfigRef:
-                  name: gitub-provider-config
+                  name: github-provider-config
                 forProvider:
                   description: "A repository managed by Crossplane"
                   visibility: public
             patches:
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
+              - type: CombineFromComposite
+                combine:
+                  variables:
+                    - fromFieldPath: spec.name
+                  strategy: string
+                  string:
+                    fmt: "%s-repo"
                 toFieldPath: metadata.name
               - type: FromCompositeFieldPath
                 fromFieldPath: spec.name
@@ -37,12 +40,10 @@ spec:
           - name: deployment-file
             base:
               kind: RepositoryFile
-              apiVersion: repo.crossplane.io/v1alpha1
-              metadata:
-                name: deployment-file
+              apiVersion: repo.github.upbound.io/v1alpha1
               spec:
                 providerConfigRef:
-                  name: gitub-provider-config
+                  name: github-provider-config
                 forProvider:
                   commitMessage: "Add deployment setup file"
                   file: deployment.yaml
@@ -58,6 +59,19 @@ spec:
                               ports:
                                 - containerPort: 80
             patches:
-              - type: FromCompositeFieldPath
-                fromFieldPath: spec.name
+              - type: CombineFromComposite
+                combine:
+                  variables:
+                    - fromFieldPath: spec.name
+                  strategy: string
+                  string:
+                    fmt: "%s-repo-deployment-file"
+                toFieldPath: metadata.name
+              - type: CombineFromComposite
+                combine:
+                  variables:
+                    - fromFieldPath: spec.name
+                  strategy: string
+                  string:
+                    fmt: "%s-repo"
                 toFieldPath: spec.forProvider.repositoryRef.name
