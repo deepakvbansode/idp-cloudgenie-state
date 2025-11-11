@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: crossplane-repo-admin
+rules:
+  - apiGroups: ["repo.crossplane.io"]
+    resources:
+      [
+        "repositories",
+        "repositories/status",
+        "repositoryfiles",
+        "repositoryfiles/status",
+      ]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
