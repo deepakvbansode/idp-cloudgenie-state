@@ -1,6 +1,0 @@
-apiVersion: api.cloudgenie.org/v1alpha1
-kind: XGitRepo
-metadata:
-  name: test-repo
-spec:
-  name: test-repo

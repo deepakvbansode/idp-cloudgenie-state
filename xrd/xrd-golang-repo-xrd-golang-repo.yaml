@@ -1,8 +1,0 @@
-apiVersion: api.cloudgenie.org/v1alpha1
-kind: xgitrepos.api.cloudgenie.org
-metadata:
-  annotations:
-    description: golang repo created vai api
-  name: xrd-golang-repo
-spec:
-  name: xrd-golang-repo-01
