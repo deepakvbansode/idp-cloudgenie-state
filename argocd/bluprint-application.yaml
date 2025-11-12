@@ -2,20 +2,20 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: cloud-genie-blueprints
+  namespace: argocd
 spec:
   destination:
-    namespace: ""
     server: https://kubernetes.default.svc
+    namespace: default
   source:
     path: blueprints
-    repoURL: " https://github.com/deepakvbansode/idp-cloudgenie-state.git"
+    repoURL: "https://github.com/deepakvbansode/idp-cloudgenie-state.git"
     targetRevision: HEAD
   project: default
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      enabled: true
     syncOptions:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true
