@@ -7,10 +7,10 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
-  source:
-    path: blueprints
-    repoURL: "https://github.com/deepakvbansode/idp-cloudgenie-state.git"
-    targetRevision: HEAD
+  sources:
+    - path: blueprints/api.cloudgenie.org/github-project
+      repoURL: "https://github.com/deepakvbansode/idp-cloudgenie-state.git"
+      targetRevision: HEAD
   project: default
   syncPolicy:
     automated:

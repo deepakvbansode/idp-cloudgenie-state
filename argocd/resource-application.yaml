@@ -7,10 +7,16 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
-  source:
-    path: resources
-    repoURL: "https://github.com/deepakvbansode/idp-cloudgenie-state.git"
-    targetRevision: HEAD
+  sources:
+    - path: resources/git-repo
+      repoURL: "https://github.com/deepakvbansode/idp-cloudgenie-state.git"
+      targetRevision: HEAD
+    - path: resources/golang-app
+      repoURL: "https://github.com/deepakvbansode/idp-cloudgenie-state.git"
+      targetRevision: HEAD
+    - path: resources/react-app
+      repoURL: "https://github.com/deepakvbansode/idp-cloudgenie-state.git"
+      targetRevision: HEAD
   project: default
   syncPolicy:
     automated:
